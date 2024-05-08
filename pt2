@@ -1,0 +1,115 @@
+public interface IOperation
+{
+    int Execute(int a, int b);
+}
+
+public class Addition : IOperation
+{
+    public int Execute(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+public class Subtraction : IOperation
+{
+    public int Execute(int a, int b)
+    {
+        return a - b;
+    }
+}
+
+public class Multiplication : IOperation
+{
+    public int Execute(int a, int b)
+    {
+        return a * b;
+    }
+}
+
+public class Division : IOperation
+{
+    public int Execute(int a, int b)
+    {
+        if (b == 0)
+        {
+            throw new DivideByZeroException("Cannot divide by zero");
+        }
+
+        return a / b;
+    }
+}
+
+public interface IPrimeChecker
+{
+    bool IsPrime(int number);
+}
+
+public class PrimeChecker : IPrimeChecker
+{
+    public bool IsPrime(int number)
+    {
+        if (number <= 1)
+        {
+            return false;
+        }
+
+        for (int i = 2; i * i <= number; i++)
+        {
+            if (number % i == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+
+
+
+
+
+public class Calculator
+{
+    private readonly IOperation addition;
+    private readonly IOperation subtraction;
+    private readonly IOperation multiplication;
+    private readonly IOperation division;
+    private readonly IPrimeChecker primeChecker;
+
+    public Calculator(IOperation addition, IOperation subtraction, IOperation multiplication, IOperation division, IPrimeChecker primeChecker)
+    {
+        this.addition = addition;
+        this.subtraction = subtraction;
+        this.multiplication = multiplication;
+        this.division = division;
+        this.primeChecker = primeChecker;
+    }
+
+    public int Add(int a, int b)
+    {
+        return addition.Execute(a, b);
+    }
+
+    public int Subtract(int a, int b)
+    {
+        return subtraction.Execute(a, b);
+    }
+
+    public int Multiply(int a, int b)
+    {
+        return multiplication.Execute(a, b);
+    }
+
+    public int Divide(int a, int b)
+    {
+        return division.Execute(a, b);
+    }
+
+    public bool IsPrime(int number)
+    {
+        return primeChecker.IsPrime(number);
+    }
+}

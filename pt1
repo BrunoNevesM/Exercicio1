@@ -1,0 +1,161 @@
+using NUnit.Framework;
+
+[TestFixture]
+public class CalculatorTests
+{
+    private Calculator calculator;
+
+    [SetUp]
+    public void SetUp()
+    {
+        calculator = new Calculator();
+    }
+
+    [Test]
+    public void Add_ReturnsCorrectSum()
+    {
+        // Arrange
+        int a = 5;
+        int b = 3;
+
+        // Act
+        int result = calculator.Add(a, b);
+
+        // Assert
+        Assert.AreEqual(8, result);
+    }
+
+    [Test]
+    public void Subtract_ReturnsCorrectDifference()
+    {
+        // Arrange
+        int a = 5;
+        int b = 3;
+
+        // Act
+        int result = calculator.Subtract(a, b);
+
+        // Assert
+        Assert.AreEqual(2, result);
+    }
+
+    [Test]
+    public void Multiply_ReturnsCorrectProduct()
+    {
+        // Arrange
+        int a = 5;
+        int b = 3;
+
+        // Act
+        int result = calculator.Multiply(a, b);
+
+        // Assert
+        Assert.AreEqual(15, result);
+    }
+
+    [Test]
+    public void Divide_ReturnsCorrectQuotient()
+    {
+        // Arrange
+        int a = 10;
+        int b = 2;
+
+        // Act
+        int result = calculator.Divide(a, b);
+
+        // Assert
+        Assert.AreEqual(5, result);
+    }
+
+    [Test]
+    public void Divide_ByZero_ThrowsDivideByZeroException()
+    {
+        // Arrange
+        int a = 10;
+        int b = 0;
+
+        // Act & Assert
+        Assert.Throws<DivideByZeroException>(() => calculator.Divide(a, b));
+    }
+
+    [Test]
+    public void IsPrime_PrimeNumber_ReturnsTrue()
+    {
+        // Arrange
+        int number = 7;
+
+        // Act
+        bool result = calculator.IsPrime(number);
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void IsPrime_NonPrimeNumber_ReturnsFalse()
+    {
+        // Arrange
+        int number = 8;
+
+        // Act
+        bool result = calculator.IsPrime(number);
+
+        // Assert
+        Assert.IsFalse(result);
+    }
+}
+
+
+
+
+
+
+
+
+using System;
+
+public class Calculator
+{
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+
+    public int Subtract(int a, int b)
+    {
+        return a - b;
+    }
+
+    public int Multiply(int a, int b)
+    {
+        return a * b;
+    }
+
+    public int Divide(int a, int b)
+    {
+        if (b == 0)
+        {
+            throw new DivideByZeroException("Cannot divide by zero");
+        }
+
+        return a / b;
+    }
+
+    public bool IsPrime(int number)
+    {
+        if (number <= 1)
+        {
+            return false;
+        }
+
+        for (int i = 2; i < number; i++)
+        {
+            if (number % i == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
